@@ -1,0 +1,382 @@
+/* --- Təməl Reset və Köklər (Rəng Palitrası) --- */
+:root {
+  --primary-color: #007bff; /* Mavi (Əsas vurğu rəngi) */
+  --primary-hover: #0056b3;
+  --success-color: #28a745; /* Yaşıl */
+  --danger-color: #dc3545; /* Qırmızı */
+  --warning-color: #ffc107; /* Sarı */
+  --background-light: #f4f7f9; /* Açıq fon */
+  --card-background: #ffffff;
+  --favorite-background: #fff0f5; /* Yumşaq çəhrayı (Favoritlər üçün) */
+  --admin-form-bg: #f7f9fb; /* Admin Form fonu */
+  --border-color: #e9ecef;
+  --text-dark: #343a40;
+  --text-medium: #6c757d;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--background-light);
+  color: var(--text-dark);
+}
+
+a {
+  text-decoration: none;
+  color: var(--primary-color);
+}
+
+/* --- App Layout (Mobile-First) --- */
+/* Köhnə .layout əvəzinə .layout-wrapper istifadə olunur */
+.layout-wrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px 10px;
+  display: flex;
+  flex-direction: column; /* Mobil üçün alt-alta yığılmalı */
+  gap: 30px;
+}
+
+/* Status Mətnləri */
+.loading-message,
+.no-results,
+.empty-favorites-message,
+.admin-status {
+  text-align: center;
+  padding: 20px;
+  font-size: 1.1em;
+  color: var(--text-medium);
+}
+.admin-error {
+  color: var(--danger-color);
+  font-weight: bold;
+  text-align: center;
+  padding: 20px;
+}
+
+/* Sections */
+.songs-section {
+  background-color: var(--card-background);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  order: 2; /* Mobil üçün Favoritlərdən sonra gəlsin */
+}
+.favorites-section {
+  background-color: var(--favorite-background);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(220, 53, 69, 0.1);
+  border: 1px solid #ffcccc;
+  order: 1; /* Mobil üçün əvvəlcə Favoritlər görünsün */
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 1.8em;
+  color: var(--text-dark);
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--border-color);
+}
+
+/* --- SongsList Styling --- */
+.filter-bar {
+  display: flex;
+  flex-direction: column; /* Mobil üçün alt-alta yığılmalı */
+  gap: 10px;
+  margin-bottom: 30px;
+  padding: 15px;
+  border-radius: 8px;
+  background-color: var(--admin-form-bg);
+}
+.filter-bar input[type="text"],
+.filter-bar select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 15px;
+  transition: border-color 0.3s;
+}
+.filter-bar input[type="text"]:focus,
+.filter-bar select:focus {
+  border-color: var(--primary-color);
+}
+
+.song-grid {
+  display: grid;
+  grid-template-columns: 1fr; /* Mobil üçün tək sütun */
+  gap: 15px;
+}
+.song-card {
+  border: 1px solid var(--border-color);
+  border-left: 5px solid var(--primary-color); /* Vurğu xətti */
+  border-radius: 10px;
+  padding: 20px;
+  background-color: var(--card-background);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+.song-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+.song-genre {
+  color: var(--text-medium);
+  font-size: 0.85em;
+  margin-bottom: 5px;
+}
+.song-name {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin: 5px 0;
+}
+.song-artist {
+  font-size: 0.9em;
+  color: var(--text-medium);
+  margin-bottom: 15px;
+}
+
+/* Mahnı Kartı Düymələri */
+.btn-favorite,
+.btn-favorite-disabled {
+  margin-top: auto;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.btn-favorite {
+  background-color: var(--primary-color);
+  color: white;
+}
+.btn-favorite:hover {
+  background-color: var(--primary-hover);
+}
+.btn-favorite-disabled {
+  background-color: var(--success-color);
+  color: white;
+  cursor: default;
+  opacity: 0.9;
+}
+
+/* --- FavoriteList Styling --- */
+.favorite-grid-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.favorite-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border: 1px solid #ffcccc;
+  border-radius: 8px;
+  background-color: var(--card-background);
+}
+.favorite-details {
+  flex-grow: 1;
+}
+.favorite-song-name {
+  font-weight: bold;
+  font-size: 15px;
+  margin: 0;
+  color: var(--text-dark);
+}
+.favorite-song-artist {
+  font-size: 13px;
+  color: var(--text-medium);
+  margin: 2px 0 0 0;
+}
+.remove-from-favorite-btn {
+  background-color: white;
+  border: 1px solid var(--danger-color);
+  color: var(--danger-color);
+  padding: 8px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.3s;
+  margin-left: 10px;
+}
+.remove-from-favorite-btn:hover {
+  background-color: var(--danger-color);
+  color: white;
+}
+
+/* --- Admin Management Styling --- */
+.admin-management-container {
+  padding: 20px;
+  background-color: var(--card-background);
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+.admin-form {
+  background-color: var(--admin-form-bg);
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  border: 1px solid var(--border-color);
+}
+.admin-form h3 {
+  font-size: 1.4em;
+  border-bottom: 1px dashed var(--border-color);
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+.admin-form input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  box-sizing: border-box;
+  font-size: 15px;
+}
+.form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+.btn-submit {
+  background-color: var(--success-color);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  flex-grow: 1;
+}
+.btn-cancel {
+  background-color: var(--text-medium);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* Admin Table */
+.admin-table-wrapper {
+  overflow-x: auto; /* Mobil üçün cədvəli sürüşdürülə bilən edir */
+}
+.admin-song-table {
+  width: 100%;
+  min-width: 600px; /* Mobil görünüşdə cədvəlin minimum eni */
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.admin-song-table th,
+.admin-song-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+.admin-song-table th {
+  background-color: var(--primary-color);
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 0.85em;
+}
+.admin-song-table tr:nth-child(even) {
+  background-color: #f7f9fb;
+}
+.admin-actions button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 8px;
+  font-size: 13px;
+  transition: background-color 0.3s;
+}
+.btn-edit {
+  background-color: var(--warning-color);
+  color: var(--text-dark);
+}
+.btn-delete {
+  background-color: var(--danger-color);
+  color: white;
+}
+
+/* --- Keçid Düymələri (Link) --- */
+.go-to-admin-btn,
+.toggle-view-btn {
+  display: block;
+  text-align: center;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  margin-top: 25px;
+  transition: background-color 0.3s, opacity 0.3s;
+}
+.go-to-admin-btn {
+  background-color: var(--text-medium);
+  color: white;
+}
+.go-to-admin-btn:hover {
+  background-color: #555;
+}
+.toggle-view-btn {
+  /* AdminPage-də geri keçid düyməsi */
+  background-color: var(--primary-color);
+  color: white;
+  width: auto;
+  margin-bottom: 25px;
+  display: inline-block;
+  padding: 10px 20px;
+}
+.toggle-view-btn:hover {
+  background-color: var(--primary-hover);
+}
+
+/* ======================================================= */
+/* --- RESPONSIVE DİZAYN (Tablet və Desktop) --- */
+/* ======================================================= */
+
+@media (min-width: 768px) {
+  /* Tablet və Desktop üçün layout-u yan-yana edirik */
+  .layout-wrapper {
+    flex-direction: row;
+    padding: 30px 20px;
+  }
+
+  .songs-section {
+    flex: 2; /* Mahnı siyahısı üçün geniş yer */
+    order: 1;
+  }
+
+  .favorites-section {
+    flex: 1; /* Favoritlər üçün dar yer */
+    order: 2;
+    min-width: 300px;
+  }
+
+  /* Filtr paneli yan-yana */
+  .filter-bar {
+    flex-direction: row;
+    gap: 15px;
+  }
+
+  /* Mahnı grid-i 2-3 sütunlu olur */
+  .song-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+}
