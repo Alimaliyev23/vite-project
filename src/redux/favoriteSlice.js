@@ -9,13 +9,11 @@ const favoriteSlice = createSlice({
   initialState,
   reducers: {
     addtoFavorit: (state, action) => {
-      // Təkrarlanmanı yoxlamaq vacibdir
       if (!state.value.some((item) => item.id === action.payload.id)) {
         state.value.push(action.payload);
       }
     },
     removeFromFavorit: (state, action) => {
-      // ID-yə görə silmə
       state.value = state.value.filter((item) => item.id !== action.payload);
     },
   },

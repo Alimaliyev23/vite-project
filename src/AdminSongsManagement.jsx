@@ -1,5 +1,3 @@
-// src/AdminSongsManagement.jsx - TƏMİZLƏNMİŞ
-
 import React, { useState, useEffect } from "react";
 import { getSongs, deleteSong, createSong, updateSong } from "./api";
 

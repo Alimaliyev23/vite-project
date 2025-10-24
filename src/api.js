@@ -1,5 +1,3 @@
-// src/api.js
-
 const BASE_URL = "https://686ff5294656744248010a71.mockapi.io/api/kitablar";
 
 export const getSongs = async () => {

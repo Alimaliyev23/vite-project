@@ -1,9 +1,7 @@
-// src/SongsList.jsx - OPTİMALLAŞDIRILMIŞ VƏ TƏMİZLƏNMİŞ
-
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addtoFavorit } from "./redux/favoriteSlice";
-import { getSongs } from "./api"; // Yeni import: api.js-dən gəlir
+import { getSongs } from "./api"; 
 
 function SongsList() {
   const [songs, setSongs] = useState([]);
@@ -21,7 +19,7 @@ function SongsList() {
     const fetchInitialSongs = async () => {
       try {
         setLoading(true);
-        const data = await getSongs(); // api.js funksiyasından istifadə
+        const data = await getSongs(); 
         setSongs(data);
 
         const uniqueGenres = Array.from(
