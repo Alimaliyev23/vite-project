@@ -3,9 +3,11 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login } from "./redux/authSlice";
 
-const CORRECT_PASSWORD = "admin";
+const CORRECT_USERNAME = "AlimAliyev";
+const CORRECT_PASSWORD = "Alim1234";
 
 const LoginPage = () => {
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const dispatch = useDispatch();
@@ -15,11 +17,14 @@ const LoginPage = () => {
     e.preventDefault();
     setError("");
 
-    if (password === CORRECT_PASSWORD) {
+    if (username === CORRECT_USERNAME && password === CORRECT_PASSWORD) {
       dispatch(login());
       navigate("/admin", { replace: true });
     } else {
-      setError("Yanlış şifrə. Zəhmət olmasa, yenidən cəhd edin.");
+      setError(
+        "Yanlış istifadəçi adı və ya şifrə. Zəhmət olmasa, yenidən cəhd edin."
+      );
+      setUsername("");
       setPassword("");
     }
   };
@@ -29,8 +34,16 @@ const LoginPage = () => {
       <h2 className="section-title">🔒 Admin Girişi</h2>
       <form onSubmit={handleSubmit} className="login-form">
         <p>
-          Demo şifrəsi: <b>{CORRECT_PASSWORD}</b>
+          Demo istifadəçi: <b>{CORRECT_USERNAME}</b> / <b>{CORRECT_PASSWORD}</b>
         </p>
+
+        <input
+          type="text"
+          placeholder="İstifadəçi adı"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+        />
 
         <input
           type="password"
